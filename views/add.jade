@@ -1,0 +1,25 @@
+extends ../node_modules/jade-bootstrap/layouts/navbar-fixed
+
+block body
+	link(href="css/main.css" rel="stylesheet" type="text/css")
+
+	// Fixed navbar
+	+navbar-fixed("Colenso Database","navbar")
+		+nav_item("/") Home
+		+nav_item("/search") Search
+		+nav_item("/add","active") Add Document
+		+nav_item_dropdown("#")(label="Dropdown")
+			+nav_item("#") Action
+			+nav_item("#") Another action
+			+nav_item("#") Something else here
+			+nav_divider
+			+nav_item("#") Separated link
+			+nav_item("#") One more separated link
+	
+
+	.container
+		// Main component for a primary marketing message or call to action
+		.jumbotron
+			p 
+				| To add a file to the Colenso database simply browse for the file you want to upload below.
+			
