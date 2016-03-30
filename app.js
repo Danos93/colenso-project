@@ -27,6 +27,16 @@ app.use('/', routes);
 app.use('/search', search);
 app.use('/add',add)
 
+var router = express.Router();
+app.use(router);
+
+//Colenso database setup
+var basex = require('basex')
+var client = new basex.Session("127.0.0.1",1984,"admin","admin")
+
+client.execute("OPEN Colenso")
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
@@ -58,5 +68,11 @@ app.use(function(err, req, res, next) {
   });
 });
 
+//HERE
+
+router.post('/search', function(req, res){
+  var text = req.body.searchBox
+  res.send(text)
+});
 
 module.exports = app;
