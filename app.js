@@ -71,12 +71,16 @@ app.use(function(err, req, res, next) {
 function searchLogic(text,radioVal)
 {
   if(radioVal == 0){ //MATCH TEXT LOGIC
-
+    var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $t in (//text())[contains(., \""+text+"\")] return db:path($t)"
+    client.execute(query,function(error,result){
+      if(error) {console.log(error)}
+      else {console.log(result.result)}
+    })
   }
   else{//MATCH TAG LOGIC
     var first = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; //"
-    var finalStr = first.concat(text)
-    client.execute(finalStr,function(error,result){
+    var query = first.concat(text)
+    client.execute(query,function(error,result){
       if(error) {console.log(error)}
       else {console.log(result.result)}
     })

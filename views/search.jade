@@ -7,10 +7,8 @@ block body
 	link(href="css/main.css" rel="stylesheet" type="text/css")
 
 	script(type='text/javascript').
-		var sendToHome = function(){
-			var element = document.getElementById(searchForm)
-			var value = element.value
-			console.log(value)
+		var test1 = function(){
+			document.getElementById("cb1").
 		}
 
 	// Fixed navbar
@@ -40,8 +38,18 @@ block body
 					br
 					input(type="radio", name="option", value="1")
 					| Tag
+					br
+					input(type="radio", name="option", value="2")
+					| Name
+					br
+					input(type="radio", name="option", value="3")
+					| Date
+					br
+					input(type="radio", name="option", value="4")
+					| Title
+					br
 
 		.row
 			.col-md-12
-				.textarea(rows="100").form-control
+				.textarea(rows="100", id="textArea").form-control
 					| This is where some of dat text will go. Yaya.
