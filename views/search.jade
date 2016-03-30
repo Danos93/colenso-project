@@ -21,12 +21,27 @@ block body
 	
 
 	.container
-
+		h2 Colenso Project
 		// Main component for a primary marketing message or call to action
 		.jumbotron
 			form.form-inline(action="/search", method="post")
-				//SEARCH TEXT FIELD
-				input.form-control(id="searchForm", name="searchBox", type="text", placeholder="Search" class="item")
+				p
+					| Search in the below field for documents with the exact specified text or search for a specific document (or documents) with a paticular tag value
+				.form-group
+					//SEARCH TEXT FIELD
+					input.form-control(id="searchForm", name="searchBox", type="text", placeholder="Search" class="item")
 
-				//SEARCH BUTTON
-				button.btn.btn-primary(class="item", type='submit') Search
+					//SEARCH BUTTON
+					button.btn.btn-primary(class="item", type='submit') Search
+				
+				p
+					input(type="radio", name="option", value="0")
+					| Match Text
+					br
+					input(type="radio", name="option", value="1")
+					| Tag
+
+		.row
+			.col-md-12
+				.textarea(rows="100").form-control
+					| This is where some of dat text will go. Yaya.

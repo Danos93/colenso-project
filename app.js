@@ -68,11 +68,27 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//HERE
+function searchLogic(text,radioVal)
+{
+  if(radioVal == 0){ //MATCH TEXT LOGIC
+
+  }
+  else{//MATCH TAG LOGIC
+    var first = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; //"
+    var finalStr = first.concat(text)
+    client.execute(finalStr,function(error,result){
+      if(error) {console.log(error)}
+      else {console.log(result.result)}
+    })
+  }
+}
+
+
 
 router.post('/search', function(req, res){
   var text = req.body.searchBox
-  res.send(text)
+  var radioVal = req.body.option
+  var success = searchLogic(text,radioVal)
 });
 
 module.exports = app;
