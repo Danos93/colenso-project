@@ -6,50 +6,68 @@ block body
 
 	link(href="css/main.css" rel="stylesheet" type="text/css")
 
-	script(type='text/javascript').
-		var test1 = function(){
-			document.getElementById("cb1").
-		}
 
 	// Fixed navbar
 	+navbar-fixed("Colenso Database","navbar")
 		+nav_item("/") Home
 		+nav_item("/search","active") Search
-		+nav_item("/add") Add Document
 	
+	h2(class="hidden" id="cheeky") #{results}
+	h2(class="hidden" id="xmlFile") !{file}
 
 	.container
 		h2 Colenso Project
 		// Main component for a primary marketing message or call to action
 		.jumbotron
-			form.form-inline(action="/search", method="post")
-				p
-					| Search in the below field for documents with the exact specified text or search for a specific document (or documents) with a paticular tag value
-				.form-group
-					//SEARCH TEXT FIELD
-					input.form-control(id="searchForm", name="searchBox", type="text", placeholder="Search" class="item")
+			.row
+				.col-md-6
+					form.form-inline(action="/search", method="post")
+						p
+							| Search in the below field for documents with the exact specified text or search for a specific document (or documents) with a paticular tag value
+						.form-group
+							//SEARCH TEXT FIELD
+							input.form-control(id="searchForm", name="searchBox", type="text", placeholder="Search" class="item")
 
-					//SEARCH BUTTON
-					button.btn.btn-primary(class="item", type='submit') Search
-				
-				p
-					input(type="radio", name="option", value="0")
-					| Match Text
-					br
-					input(type="radio", name="option", value="1")
-					| Tag
-					br
-					input(type="radio", name="option", value="2")
-					| Name
-					br
-					input(type="radio", name="option", value="3")
-					| Date
-					br
-					input(type="radio", name="option", value="4")
-					| Title
-					br
+							//SEARCH BUTTON
+							button.btn.btn-primary(class="item", type='submit') Search
+						
+						p
+							input(type="radio", name="option", value="0")
+							| Match Text
+
+
+				.col-md-6
+					form.form-inline(action="/file", method="post")
+						#buttons
+
 
 		.row
 			.col-md-12
-				.textarea(rows="100", id="textArea").form-control
-					| This is where some of dat text will go. Yaya.
+				textarea(class="form-control",id="textdisplay" rows="50")
+
+
+	script(type="text/javascript").
+		var element = document.getElementById("cheeky")
+		var allText = element.innerHTML
+		var newArray = allText.split(",")
+		var formGroup = document.getElementById("buttons")
+		var i
+		var x = newArray.length
+		for(i = 0; i < x; i++){
+			var btn = document.createElement("button");
+			btn.appendChild(document.createTextNode(newArray[i]))
+			btn.className = "btn-primary"
+			btn.type = "submit"
+			btn.name = newArray[i]
+			formGroup.appendChild(btn)
+		}
+
+		var xmlfile = document.getElementById("xmlFile")
+		var text = xmlfile.innerHTML
+		var textArea = document.getElementById("textdisplay")
+
+		textArea.value = text;
+
+		
+
+						

@@ -68,31 +68,94 @@ app.use(function(err, req, res, next) {
   });
 });
 
-function searchLogic(text,radioVal)
+
+
+function searchText(text)
 {
-  if(radioVal == 0){ //MATCH TEXT LOGIC
-    var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $t in (//text())[contains(., \""+text+"\")] return db:path($t)"
-    client.execute(query,function(error,result){
-      if(error) {console.log(error)}
-      else {console.log(result.result)}
+  var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $t in (//text())[contains(., \""+text+"\")] return db:path($t)"
+  client.execute(query,function(error,result){
+    var pathList = result.result.split("\n")
+    newArray = pathList.filter(function(elem, pos) {
+      return pathList.indexOf(elem) == pos;
     })
-  }
-  else{//MATCH TAG LOGIC
-    var first = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; //"
-    var query = first.concat(text)
-    client.execute(query,function(error,result){
-      if(error) {console.log(error)}
-      else {console.log(result.result)}
-    })
-  }
+  })
+  console.log(newArray)
+  return newArray
 }
 
+function searchTag(text)
+{
+  var first = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $t in(//"
+  var query = first.concat(text)
+  client.execute(query,function(error,result){
+    if(error) {console.log(error)}
+    else {console.log(result.result)}
+  })
+}  
 
+function searchName(text)
+{
+  //LOGIC
+  client.execute(query,function(error,result){
+    if(error) {console.log(error)}
+    else {console.log(result.result)}
+  })
+}  
+
+function searchDate(text)
+{
+  //LOGIC
+  client.execute(query,function(error,result){
+    if(error) {console.log(error)}
+    else {console.log(result.result)}
+  })
+}
+
+function searchTitle(text)
+{
+  //LOGIC
+  client.execute(query,function(error,result){
+    if(error) {console.log(error)}
+    else {console.log(result.result)}
+  })
+}
 
 router.post('/search', function(req, res){
   var text = req.body.searchBox
   var radioVal = req.body.option
-  var success = searchLogic(text,radioVal)
+  if(radioVal == 0){
+    var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $t in (//text())[contains(., \""+text+"\")] return db:path($t)"
+    client.execute(query,function(error,result){
+      var pathList = result.result.split("\n")
+      var newArray = pathList.filter(function(elem, pos) {
+        return pathList.indexOf(elem) == pos;
+      })
+      res.render('search',{results: newArray})
+    })
+  }
+  else if (radioVal == 1){
+    result = searchTag(text)
+  }
+  else if (radioVal == 2){
+    result = searchName(text)
+  }
+  else if (radioVal == 3){
+    result = searchDate(text)
+  }
+  else if (radioVal == 4){
+    result = searchTitle(text)
+  }
+  //res.render('search',{paths: result})
 });
+
+router.post('/file', function(req, res){
+  console.log("here")
+  var fileName = Object.getOwnPropertyNames(req.body)[0];
+  var query = "XQUERY declare default element namespace 'http://www.tei-c.org/ns/1.0'; for $doc in collection('Colenso') where matches(document-uri($doc), '"+fileName+"') return $doc";
+  client.execute(query,function(error,result){
+    console.log(result.result)
+    res.render("search",{file: result.result})
+    })
+ } );
 
 module.exports = app;

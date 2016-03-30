@@ -7,7 +7,6 @@ block body
 	+navbar-fixed("Colenso Database","navbar")
 		+nav_item("/","active") Home
 		+nav_item("/search") Search
-		+nav_item("/add") Add Document
 	
 
 	.container
@@ -19,13 +18,3 @@ block body
 			p Select one of the options below to get started
 			p
 				a.btn.btn-lg.btn-primary(href='/search', role='button') Document Search »
-				a.btn.btn-lg.btn-primary(href='/add', role='button') Add Document »
-				a.btn.btn-lg.btn-primary(href='#', role='button') NO ROUTE »
-
-	.container
-		+carousel("Carousel ID",[
-		{image:"images/carousel1.jpg",p:"Carousel Caption #1"},
-		{image:"images/carousel2.jpg",p:"Carousel Caption #2"},
-		{image:"images/carousel3.jpg",p:"Carousel Caption #3"},
-		{image:"images/carousel1.jpg",p:"Carousel Caption #4"}
-		])
